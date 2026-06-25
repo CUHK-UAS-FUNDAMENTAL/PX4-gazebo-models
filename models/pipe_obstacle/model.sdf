@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<!-- Pipe/tube obstacle per rulebook Fig.10b.
+     1000x1000mm footprint, 2000mm tall.
+     Two vertical posts + two diagonal crossing tubes (X pattern).
+     All red, 45mm diameter tubes.
+
+     Diagonal geometry: tubes span from (y=-0.5, z=0) to (y=+0.5, z=2.0)
+     and from (y=+0.5, z=0) to (y=-0.5, z=2.0).
+     Both pass through center (y=0, z=1.0).
+     Length = sqrt(1^2 + 2^2) = sqrt(5) ≈ 2.236m.
+     Roll angles: ±atan(0.5) = ±0.4636 rad (26.57°) -->
+<sdf version="1.9">
+  <model name="pipe_obstacle">
+    <static>true</static>
+
+    <!-- Vertical posts at x=0, y=±0.5 -->
+    <link name="post_left">
+      <pose>0 -0.5 1.0 0 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.0225</radius><length>2.0</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.0225</radius><length>2.0</length></cylinder></geometry>
+        <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+    <link name="post_right">
+      <pose>0 0.5 1.0 0 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.0225</radius><length>2.0</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.0225</radius><length>2.0</length></cylinder></geometry>
+        <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- Diagonal 1: (y=-0.5,z=0) → (y=+0.5,z=2.0). Center at (y=0,z=1.0). Roll = -0.4636 rad. -->
+    <link name="diag_1">
+      <pose>0 0 1.0 -0.4636 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.0225</radius><length>2.236</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.0225</radius><length>2.236</length></cylinder></geometry>
+        <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- Diagonal 2: (y=+0.5,z=0) → (y=-0.5,z=2.0). Center at (y=0,z=1.0). Roll = +0.4636 rad. -->
+    <link name="diag_2">
+      <pose>0 0 1.0 0.4636 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.0225</radius><length>2.236</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.0225</radius><length>2.236</length></cylinder></geometry>
+        <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- Top cross-beam connecting posts -->
+    <link name="top_beam">
+      <pose>0 0 2.0 1.5708 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.0225</radius><length>1.0</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.0225</radius><length>1.0</length></cylinder></geometry>
+        <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- Bottom cross-beam connecting posts -->
+    <link name="bot_beam">
+      <pose>0 0 0.05 1.5708 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.0225</radius><length>1.0</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.0225</radius><length>1.0</length></cylinder></geometry>
+        <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+  </model>
+</sdf>

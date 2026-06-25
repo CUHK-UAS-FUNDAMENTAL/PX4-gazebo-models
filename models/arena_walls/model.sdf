@@ -1,0 +1,82 @@
+<!-- models/arena_walls/model.sdf -->
+<sdf version="1.9">
+  <model name="arena_walls">
+    <static>true</static>
+
+    <!-- Floor -->
+    <link name="floor">
+      <collision name="floor_col">
+        <geometry><box><size>14 7 0.05</size></box></geometry>
+      </collision>
+      <visual name="floor_vis">
+        <geometry><box><size>14 7 0.05</size></box></geometry>
+        <material>
+          <ambient>0.8 0.1 0.1 1</ambient>  <!-- red carpet -->
+          <diffuse>0.8 0.1 0.1 1</diffuse>
+        </material>
+      </visual>
+      <pose>0 0 -0.025 0 0 0</pose>
+    </link>
+
+    <!-- Ceiling (transparent, for realism) -->
+    <link name="ceiling">
+      <pose>0 0 4 0 0 0</pose>
+      <collision name="ceiling_col">
+        <geometry><box><size>14 7 0.05</size></box></geometry>
+      </collision>
+      <visual name="ceiling_vis">
+        <geometry><box><size>14 7 0.05</size></box></geometry>
+        <material><ambient>1 1 1 0.1</ambient></material>
+      </visual>
+    </link>
+
+    <!-- North wall -->
+    <link name="wall_north">
+      <pose>0 3.5 2 0 0 0</pose>
+      <collision name="col">
+        <geometry><box><size>14 0.05 4</size></box></geometry>
+      </collision>
+      <visual name="vis">
+        <geometry><box><size>14 0.05 4</size></box></geometry>
+        <material><ambient>0.9 0.9 0.9 0.1</ambient><diffuse>0.9 0.9 0.9 0.1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- South wall -->
+    <link name="wall_south">
+      <pose>0 -3.5 2 0 0 0</pose>
+      <collision name="col">
+        <geometry><box><size>14 0.05 4</size></box></geometry>
+      </collision>
+      <visual name="vis">
+        <geometry><box><size>14 0.05 4</size></box></geometry>
+        <material><ambient>0.9 0.9 0.9 0.1</ambient><diffuse>0.9 0.9 0.9 0.1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- East wall -->
+    <link name="wall_east">
+      <pose>7 0 2 0 0 0</pose>
+      <collision name="col">
+        <geometry><box><size>0.05 7 4</size></box></geometry>
+      </collision>
+      <visual name="vis">
+        <geometry><box><size>0.05 7 4</size></box></geometry>
+        <material><ambient>0.9 0.9 0.9 0.1</ambient><diffuse>0.9 0.9 0.9 0.1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- West wall -->
+    <link name="wall_west">
+      <pose>-7 0 2 0 0 0</pose>
+      <collision name="col">
+        <geometry><box><size>0.05 7 4</size></box></geometry>
+      </collision>
+      <visual name="vis">
+        <geometry><box><size>0.05 7 4</size></box></geometry>
+        <material><ambient>0.9 0.9 0.9 0.1</ambient><diffuse>0.9 0.9 0.9 0.1</diffuse></material>
+      </visual>
+    </link>
+
+  </model>
+</sdf>

@@ -1,0 +1,140 @@
+<?xml version="1.0" ?>
+<!-- Three boxes for Mission 3 hot-spot drop per rulebook Fig.12.
+     Each box: 396x278x132mm. Three boxes side-by-side along Y axis.
+     Center box is the hot spot (temperature 70-100°C) - shown with orange top.
+     Box interiors open at top (modelled as 4 walls + base, no lid). -->
+<sdf version="1.9">
+  <model name="hot_spot_boxes">
+    <static>true</static>
+
+    <!-- Wall thickness -->
+    <!-- Box outer: 0.396 x 0.278 x 0.132m. Wall thickness: 0.01m. -->
+
+    <!-- ===== LEFT BOX (y = -0.438m center, cold) ===== -->
+    <link name="left_base">
+      <pose>0 -0.438 0.005 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.396 0.278 0.01</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.396 0.278 0.01</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="left_front">
+      <pose>0.193 -0.438 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.01 0.278 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.01 0.278 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="left_back">
+      <pose>-0.193 -0.438 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.01 0.278 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.01 0.278 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="left_sideL">
+      <pose>0 -0.577 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.376 0.01 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.376 0.01 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="left_sideR">
+      <pose>0 -0.299 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.376 0.01 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.376 0.01 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- ===== CENTER BOX (y = 0.0, HOT - orange) ===== -->
+    <link name="hot_base">
+      <pose>0 0 0.005 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.396 0.278 0.01</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.396 0.278 0.01</size></box></geometry>
+        <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="hot_front">
+      <pose>0.193 0 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.01 0.278 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.01 0.278 0.122</size></box></geometry>
+        <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="hot_back">
+      <pose>-0.193 0 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.01 0.278 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.01 0.278 0.122</size></box></geometry>
+        <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="hot_sideL">
+      <pose>0 -0.139 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.376 0.01 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.376 0.01 0.122</size></box></geometry>
+        <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="hot_sideR">
+      <pose>0 0.139 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.376 0.01 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.376 0.01 0.122</size></box></geometry>
+        <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- ===== RIGHT BOX (y = +0.438m, cold) ===== -->
+    <link name="right_base">
+      <pose>0 0.438 0.005 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.396 0.278 0.01</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.396 0.278 0.01</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="right_front">
+      <pose>0.193 0.438 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.01 0.278 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.01 0.278 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="right_back">
+      <pose>-0.193 0.438 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.01 0.278 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.01 0.278 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="right_sideL">
+      <pose>0 0.299 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.376 0.01 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.376 0.01 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="right_sideR">
+      <pose>0 0.577 0.066 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.376 0.01 0.122</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.376 0.01 0.122</size></box></geometry>
+        <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+      </visual>
+    </link>
+
+  </model>
+</sdf>

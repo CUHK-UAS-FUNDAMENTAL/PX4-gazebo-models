@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+<!-- Wind turbine blade for Mission 4 per rulebook Fig.13 and Fig.14.
+     Blade: 1450mm long x 200mm wide x 60mm thick, tilted 45 deg (pitch = -0.7854 rad).
+     Blade lower end at z=0.25 (on support stand), upper end at z=1.275.
+     Center at (0.513, 0, 0.763).
+
+     Copper target discs on blade top face at distances 200, 350, 450, 600mm from root.
+     Computed positions (in model frame, blade-face normal = Ry(-45)*(0,0,1)):
+       disc_1: (0.120, 0, 0.413)
+       disc_2: (0.227, 0, 0.519)
+       disc_3: (0.297, 0, 0.590)
+       disc_4: (0.403, 0, 0.696)
+     All discs: pitch = -0.7854 rad (face perpendicular to blade normal).
+
+     Support stand: triangular frame, 800mm tall, 523mm base.
+     Copper ring stand: cylindrical post at (-0.3, 0), ring at 500mm height. -->
+<sdf version="1.9">
+  <model name="wind_turbine_blade">
+    <static>true</static>
+
+    <!-- ===== SUPPORT STAND ===== -->
+    <!-- Vertical back support -->
+    <link name="stand_vertical">
+      <pose>0 0 0.4 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.05 0.12 0.8</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.05 0.12 0.8</size></box></geometry>
+        <material><ambient>0.55 0.27 0.07 1</ambient><diffuse>0.55 0.27 0.07 1</diffuse></material>
+      </visual>
+    </link>
+    <!-- Horizontal base -->
+    <link name="stand_base">
+      <pose>0.2615 0 0.025 0 0 0</pose>
+      <collision name="col"><geometry><box><size>0.523 0.12 0.05</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>0.523 0.12 0.05</size></box></geometry>
+        <material><ambient>0.55 0.27 0.07 1</ambient><diffuse>0.55 0.27 0.07 1</diffuse></material>
+      </visual>
+    </link>
+    <!-- Diagonal brace (hypotenuse): from (0.025, z=0.8) to (0.523, z=0.05), length=sqrt(0.498^2+0.75^2)=0.898m, angle=atan(0.75/0.498)=56.4 deg -->
+    <link name="stand_brace">
+      <pose>0.274 0 0.425 0 -0.9827 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.02</radius><length>0.898</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.02</radius><length>0.898</length></cylinder></geometry>
+        <material><ambient>0.55 0.27 0.07 1</ambient><diffuse>0.55 0.27 0.07 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- ===== BLADE ===== -->
+    <!-- Box 1.45m x 0.2m x 0.06m, pitched -45 deg. Center at (0.513, 0, 0.763). -->
+    <link name="blade">
+      <pose>0.513 0 0.763 0 -0.7854 0</pose>
+      <collision name="col"><geometry><box><size>1.45 0.2 0.06</size></box></geometry></collision>
+      <visual name="vis">
+        <geometry><box><size>1.45 0.2 0.06</size></box></geometry>
+        <material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- ===== ARUCO MARKERS ON BLADE (visual panels) ===== -->
+    <!-- Three ArUco markers (100mm square) along blade top face.
+         Placed at same rotation as copper discs (pitch=-0.7854). -->
+    <link name="aruco_id4">
+      <pose>0.185 0 0.476 0 -0.7854 0</pose>
+      <visual name="vis">
+        <geometry><box><size>0.005 0.1 0.1</size></box></geometry>
+        <material>
+          <pbr><metal>
+            <albedo_map>materials/textures/aruco_markers/id_4_wind.png</albedo_map>
+          </metal></pbr>
+        </material>
+      </visual>
+    </link>
+    <link name="aruco_id5">
+      <pose>0.255 0 0.547 0 -0.7854 0</pose>
+      <visual name="vis">
+        <geometry><box><size>0.005 0.1 0.1</size></box></geometry>
+        <material>
+          <pbr><metal>
+            <albedo_map>materials/textures/aruco_markers/id_5_wind.png</albedo_map>
+          </metal></pbr>
+        </material>
+      </visual>
+    </link>
+    <link name="aruco_id6">
+      <pose>0.326 0 0.618 0 -0.7854 0</pose>
+      <visual name="vis">
+        <geometry><box><size>0.005 0.1 0.1</size></box></geometry>
+        <material>
+          <pbr><metal>
+            <albedo_map>materials/textures/aruco_markers/id_6_wind.png</albedo_map>
+          </metal></pbr>
+        </material>
+      </visual>
+    </link>
+
+    <!-- ===== COPPER DISC TARGETS ===== -->
+    <!-- Cylinders flat on blade face: radius=0.04m, length=0.02m, same pitch as blade normal. -->
+    <link name="copper_1">
+      <pose>0.120 0 0.413 0 -0.7854 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry>
+        <material><ambient>0.72 0.45 0.2 1</ambient><diffuse>0.72 0.45 0.2 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="copper_2">
+      <pose>0.227 0 0.519 0 -0.7854 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry>
+        <material><ambient>0.72 0.45 0.2 1</ambient><diffuse>0.72 0.45 0.2 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="copper_3">
+      <pose>0.297 0 0.590 0 -0.7854 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry>
+        <material><ambient>0.72 0.45 0.2 1</ambient><diffuse>0.72 0.45 0.2 1</diffuse></material>
+      </visual>
+    </link>
+    <link name="copper_4">
+      <pose>0.403 0 0.696 0 -0.7854 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.04</radius><length>0.02</length></cylinder></geometry>
+        <material><ambient>0.72 0.45 0.2 1</ambient><diffuse>0.72 0.45 0.2 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- ===== COPPER RING PICKUP STAND ===== -->
+    <!-- Post: 500mm tall at x=-0.3 (away from blade structure). -->
+    <link name="ring_post">
+      <pose>-0.3 0 0.25 0 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.01</radius><length>0.5</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.01</radius><length>0.5</length></cylinder></geometry>
+        <material><ambient>0.72 0.45 0.2 1</ambient><diffuse>0.72 0.45 0.2 1</diffuse></material>
+      </visual>
+    </link>
+    <!-- Copper ring (torus approximated as thin cylinder at top of post). -->
+    <link name="ring">
+      <pose>-0.3 0 0.51 1.5708 0 0</pose>
+      <collision name="col"><geometry><cylinder><radius>0.04</radius><length>0.015</length></cylinder></geometry></collision>
+      <visual name="vis">
+        <geometry><cylinder><radius>0.04</radius><length>0.015</length></cylinder></geometry>
+        <material><ambient>0.72 0.45 0.2 1</ambient><diffuse>0.72 0.45 0.2 1</diffuse></material>
+      </visual>
+    </link>
+
+  </model>
+</sdf>

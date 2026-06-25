@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<!-- Moving landing platform: ±0.5m Y oscillation via world prismatic spring.
+     Pattern from official Gazebo Sim world_joint.sdf example.
+     World joint (prismatic, Y-axis) pins base to world, spring provides restoring force.
+     base starts at local Y=+0.5 → initial displacement from spring reference (0).
+     Spring: k=3.09 N/m, m=5 kg → ω=0.785 rad/s → T≈8 s, A=0.5 m.
+     Include model at center of desired oscillation (e.g. world Y=1.5 for right stripe).
+     Oscillation range: world Y = [include_Y - 0.5, include_Y + 0.5]. -->
+<sdf version="1.9">
+  <model name="landing_platform_moving">
+
+    <link name="base">
+      <!-- Initial Y offset gives the spring its starting displacement -->
+      <pose>0 0.5 0.025 0 0 0</pose>
+      <inertial>
+        <mass>5.0</mass>
+        <inertia>
+          <ixx>0.151</ixx><iyy>0.151</iyy><izz>0.300</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="col">
+        <geometry><box><size>0.6 0.6 0.05</size></box></geometry>
+        <surface>
+          <friction>
+            <ode><mu>0</mu><mu2>0</mu2></ode>
+          </friction>
+          <contact>
+            <ode><max_vel>0</max_vel></ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name="vis">
+        <geometry><box><size>0.6 0.6 0.05</size></box></geometry>
+        <material>
+          <ambient>0.2 0.2 0.8 1</ambient>
+          <diffuse>0.2 0.2 0.8 1</diffuse>
+          <pbr>
+            <metal>
+              <albedo_map>materials/textures/aruco_markers/id_1_landing.png</albedo_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Prismatic world joint: constrains base to slide in world Y only.
+         Spring pulls toward joint reference (Y=0 relative to model origin).
+         damping=0.5 prevents numerical drift without killing the oscillation. -->
+    <joint name="world_joint" type="prismatic">
+      <parent>world</parent>
+      <child>base</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>3.09</spring_stiffness>
+          <damping>0.5</damping>
+        </dynamics>
+        <limit>
+          <lower>-0.6</lower>
+          <upper>0.6</upper>
+        </limit>
+      </axis>
+    </joint>
+
+  </model>
+</sdf>

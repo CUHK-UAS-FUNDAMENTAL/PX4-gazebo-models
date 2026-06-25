@@ -1,0 +1,174 @@
+<?xml version="1.0" ?>
+<!-- IMAV 2026 Indoor Competition Arena
+     Arena: 14m (X) x 7m (Y) x 4m (Z), centered at origin.
+     Obstacle course runs along X-axis (drone flies left to right).
+
+     Mission 1 - Obstacle course (X-axis, Y=0):
+       X=-5.5  Takeoff platform (ArUco Id0, fixed)
+       X=-2.5  Window frame (blue 500x400mm and red 400x400mm openings)
+       X=-0.5  Red bar (fly over, default 1600mm)
+       X= 1.0  Blue bar (fly under, default 800mm)
+       X= 3.0  Pipe obstacle (X-crossing tubes)
+       X= 5.5  Landing platform (ArUco Id1, moving ±0.5m in Y)
+
+     Mission 2 - Dark room inspection (upper-left, facing south):
+       Center at X=-4.5, Y=2.0; rotated 90° so windows face -Y
+
+     Mission 3 - Hot spot drop (lower-center):
+       Center at X=0, Y=-2.5
+
+     Mission 4 - Wind turbine inspection (lower-right):
+       Center at X=2.5, Y=-2.5 -->
+<sdf version="1.9">
+  <world name="imav_indoor">
+
+    <!-- Physics -->
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <!-- Plugins -->    
+    <plugin filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+            
+    <plugin filename="gz-sim-imu-system"
+            name="gz::sim::systems::Imu"/>
+
+    <plugin filename="gz-sim-magnetometer-system"
+            name="gz::sim::systems::Magnetometer"/>
+
+    <plugin filename="gz-sim-air-pressure-system"
+            name="gz::sim::systems::AirPressure"/>
+
+    <plugin filename="gz-sim-navsat-system"
+            name="gz::sim::systems::NavSat"/>
+
+    <atmosphere type="adiabatic"/>
+
+    <magnetic_field>6.0e-06 2.3e-05 -4.2e-05</magnetic_field>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397742</latitude_deg>
+      <longitude_deg>8.545594</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    
+    <!-- Lighting: main ceiling light -->
+    <light type="directional" name="ceiling_light">
+      <pose>0 0 4 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>0 0 -1</direction>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
+    <!-- Additional fill light for even illumination -->
+    <light type="point" name="fill_light">
+      <pose>0 0 3.5 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <linear>0.05</linear>
+        <constant>0.8</constant>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
+    <!-- ===== ARENA STRUCTURE ===== -->
+    <include>
+      <uri>model://arena_walls</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Textured floor strips (flower pattern under obstacle course and side passages) -->
+    <include>
+      <uri>model://textured_floor</uri>
+      <pose>0 0 0.001 0 0 0</pose>
+    </include>
+
+    <!-- ===== MISSION 1: OBSTACLE COURSE ===== -->
+
+    <!-- Takeoff platform (fixed, ArUco Id0) -->
+    <include>
+      <uri>model://landing_platform_fixed</uri>
+      <name>takeoff_platform</name>
+      <pose>5.5 -1.5 0 0 0 0</pose>
+    </include>
+
+    <!-- Obstacle 1: Window frame (blue 500x400 + red 400x400 openings) -->
+    <include>
+      <uri>model://window_frame</uri>
+      <name>window_obstacle</name>
+      <pose>-2.5 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Obstacle 2: Red bar (fly over, default 1600mm) -->
+    <include>
+      <uri>model://red_bar</uri>
+      <name>red_bar</name>
+      <pose>-0.5 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Obstacle 3: Blue bar (fly under, default 800mm) -->
+    <include>
+      <uri>model://blue_bar</uri>
+      <name>blue_bar</name>
+      <pose>1.0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Obstacle 4: Pipe/tube X-crossing structure -->
+    <include>
+      <uri>model://pipe_obstacle</uri>
+      <name>pipe_obstacle</name>
+      <pose>3.0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Landing platform (moving, ArUco Id1).
+         Spring world joint oscillates ±0.5m around this include pose in world Y.
+         Oscillation range: Y = [1.0, 2.0], centered on right stripe at Y=1.5. -->
+    <include>
+      <uri>model://landing_moving_platform</uri>
+      <name>landing_platform_moving</name>
+      <pose>5.5 1.5 0 0 0 0</pose>
+    </include>
+
+    <!-- ===== MISSION 2: DARK ROOM INSPECTION ===== -->
+    <!-- Dark room: 2.5m cube. Rotated -90° in yaw so the front wall
+         (windows) faces toward Y=0 (the obstacle course). -->
+    <include>
+      <uri>model://dark_room</uri>
+      <name>dark_room</name>
+      <pose>-4.5 -2.0 0 0 0 3.14159</pose>
+    </include>
+
+    <!-- ===== MISSION 3: HOT SPOT DROP ===== -->
+    <!-- Three boxes (396x278x132mm), center box is hot spot. -->
+    <include>
+      <uri>model://hot_spot_boxes</uri>
+      <name>hot_spot_boxes</name>
+      <pose>0 -2.5 0 0 0 0</pose>
+    </include>
+
+    <!-- ===== MISSION 4: WIND TURBINE INSPECTION ===== -->
+    <!-- Blade tilted 45°, copper disc targets, ArUco Id4/5/6, ring stand. -->
+    <include>
+      <uri>model://wind_turbine_blade</uri>
+      <name>wind_turbine</name>
+      <pose>2.5 -2.5 0 0 0 1.5708</pose>
+    </include>
+
+  </world>
+</sdf>
