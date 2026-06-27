@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IMAV 2026 Indoor Competition Arena (V1 Delivery)
+  Static scene: imav2026_indoor_static (DAE mesh)
+  Mission 1: Obstacle course -- bars along Y- direction
+  Mission 2: Wooden house inspection -- babies in NW quadrant
+  Mission 3: Hot spot drop -- thermal sources near center-north
+  Mission 4: Wind turbine inspection -- copper ring + 4 discs in NE quadrant
+  Landing platform: moving along X axis in SE corner
+-->
+<sdf version="1.9">
+  <world name="imav2026_indoor">
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    <plugin name="gz::sim::systems::Physics" filename="gz-sim-physics-system"/>
+    <plugin name="gz::sim::systems::UserCommands" filename="gz-sim-user-commands-system"/>
+    <plugin name="gz::sim::systems::SceneBroadcaster" filename="gz-sim-scene-broadcaster-system"/>
+    <plugin name="gz::sim::systems::Contact" filename="gz-sim-contact-system"/>
+    <plugin name="gz::sim::systems::Imu" filename="gz-sim-imu-system"/>
+    <plugin name="gz::sim::systems::AirPressure" filename="gz-sim-air-pressure-system"/>
+    <plugin name="gz::sim::systems::ApplyLinkWrench" filename="gz-sim-apply-link-wrench-system"/>
+    <plugin name="gz::sim::systems::NavSat" filename="gz-sim-navsat-system"/>
+    <plugin name="gz::sim::systems::Sensors" filename="gz-sim-sensors-system">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <!-- IMAV2026: Landing platform motion oscillator -->
+    <plugin name="imav2026::LandingPlatformMotion" filename="Imav2026LandingPlatformMotion">
+      <model_name>imav2026_landing_platform</model_name>
+      <min_x>1.569980</min_x>
+      <max_x>2.727315</max_x>
+      <speed_mps>0.2</speed_mps>
+    </plugin>
+    <gui fullscreen="false">
+      <plugin filename="MinimalScene" name="3D View">
+        <gz-gui>
+          <title>3D View</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="string" key="state">docked</property>
+        </gz-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <ambient_light>0.4 0.4 0.4</ambient_light>
+        <background_color>0.8 0.8 0.8</background_color>
+        <camera_pose>-6 0 6 0 0.5 0</camera_pose>
+        <camera_clip><near>0.25</near><far>25000</far></camera_clip>
+      </plugin>
+      <plugin filename="EntityContextMenuPlugin" name="Entity context menu">
+        <gz-gui><property key="state" type="string">floating</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="GzSceneManager" name="Scene Manager">
+        <gz-gui><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="InteractiveViewControl" name="Interactive view control">
+        <gz-gui><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="CameraTracking" name="Camera Tracking">
+        <gz-gui><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="MarkerManager" name="Marker manager">
+        <gz-gui><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="SelectEntities" name="Select Entities">
+        <gz-gui><anchors target="Select entities"><line own="right" target="right"/><line own="top" target="top"/></anchors><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="VisualizationCapabilities" name="Visualization Capabilities">
+        <gz-gui><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin filename="Spawn" name="Spawn Entities">
+        <gz-gui><anchors target="Select entities"><line own="right" target="right"/><line own="top" target="top"/></anchors><property key="resizable" type="bool">false</property><property key="width" type="double">5</property><property key="height" type="double">5</property><property key="state" type="string">floating</property><property key="showTitleBar" type="bool">false</property></gz-gui>
+      </plugin>
+      <plugin name="World control" filename="WorldControl">
+        <gz-gui><title>World control</title><property type="bool" key="showTitleBar">0</property><property type="bool" key="resizable">0</property><property type="double" key="height">72</property><property type="double" key="width">121</property><property type="double" key="z">1</property><property type="string" key="state">floating</property><anchors target="3D View"><line own="left" target="left"/><line own="bottom" target="bottom"/></anchors></gz-gui>
+        <play_pause>1</play_pause><step>1</step><start_paused>1</start_paused>
+      </plugin>
+      <plugin name="World stats" filename="WorldStats">
+        <gz-gui><title>World stats</title><property type="bool" key="showTitleBar">0</property><property type="bool" key="resizable">0</property><property type="double" key="height">110</property><property type="double" key="width">290</property><property type="double" key="z">1</property><property type="string" key="state">floating</property><anchors target="3D View"><line own="right" target="right"/><line own="bottom" target="bottom"/></anchors></gz-gui>
+        <sim_time>1</sim_time><real_time>1</real_time><real_time_factor>1</real_time_factor><iterations>1</iterations>
+      </plugin>
+      <plugin name="Entity tree" filename="EntityTree"/>
+    </gui>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type="adiabatic"/>
+    <scene>
+      <grid>false</grid>
+      <ambient>1 1 1 1</ambient>
+      <background>0.3 0.7 0.9 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <light type="directional" name="sun">
+      <cast_shadows>false</cast_shadows>
+      <pose>-5 -3 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>1 1 1 1</specular>
+      <direction>0 0 -1</direction>
+    </light>
+
+    <light type="point" name="fill_light">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 3.5 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <linear>0.05</linear>
+        <constant>0.8</constant>
+      </attenuation>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane><normal>0.0 0.0 1</normal><size>1 1</size></plane>
+          </geometry>
+        </collision>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+    </model>
+
+    <!-- Static indoor scene -->
+    <include>
+      <uri>model://imav2026_indoor_static</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Landing platform (moving, with motion plugin) -->
+    <include>
+      <uri>model://imav2026_landing_platform</uri>
+      <pose>2.727315 -6.993107 0.03 0 0 0</pose>
+    </include>
+
+    <!-- Copper ring (Mission 4) -->
+    <include>
+      <uri>model://imav2026_copper_ring</uri>
+      <pose>0.190799 4.216640 0.550411 1.570796 0 0</pose>
+    </include>
+
+    <!-- Copper discs (Mission 4) - 4 instances -->
+    <include>
+      <name>copper_disc_0</name>
+      <uri>model://imav2026_copper_disc</uri>
+      <pose>2.279557 4.539700 1.986765 1.570796 0 0</pose>
+    </include>
+    <include>
+      <name>copper_disc_1</name>
+      <uri>model://imav2026_copper_disc</uri>
+      <pose>2.068919 4.539700 1.610023 1.570796 0 0</pose>
+    </include>
+    <include>
+      <name>copper_disc_2</name>
+      <uri>model://imav2026_copper_disc</uri>
+      <pose>1.690054 4.539699 0.937345 1.570796 0 0</pose>
+    </include>
+    <include>
+      <name>copper_disc_3</name>
+      <uri>model://imav2026_copper_disc</uri>
+      <pose>1.442930 4.539699 0.517247 1.570796 0 0</pose>
+    </include>
+
+    <!-- Red bar (fly over) -->
+    <include>
+      <name>red_bar_0</name>
+      <uri>model://imav2026_red_bar</uri>
+      <pose>0 -5.532255 1.0 0 0 0</pose>
+    </include>
+
+    <!-- Blue bars (fly under) -->
+    <include>
+      <name>blue_bar_0</name>
+      <uri>model://imav2026_blue_bar</uri>
+      <pose>0 -4.527609 1.0 0 0 0</pose>
+    </include>
+    <include>
+      <name>blue_bar_1</name>
+      <uri>model://imav2026_blue_bar</uri>
+      <pose>0 -3.546240 1.0 0 0 0</pose>
+    </include>
+
+    <!-- Sleeping babies (wooden house) -->
+    <include>
+      <name>baby_0</name>
+      <uri>model://imav2026_sleeping_baby</uri>
+      <pose>-3.0 4.0 0.2 0 0 0.2</pose>
+    </include>
+    <include>
+      <name>baby_1</name>
+      <uri>model://imav2026_sleeping_baby</uri>
+      <pose>-2.25 4.75 0.2 0 0 -0.4</pose>
+    </include>
+    <include>
+      <name>baby_2</name>
+      <uri>model://imav2026_sleeping_baby</uri>
+      <pose>-1.55 5.55 0.2 0 0 0.65</pose>
+    </include>
+
+    <!-- Thermal sources (hot spot detection) -->
+    <include>
+      <name>thermal_sources</name>
+      <uri>model://imav2026_thermal_sources</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+  </world>
+</sdf>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="imav2026_red_bar">
+    <static>true</static>
+
+    <link name="red_bar_link">
+      <visual name="red_bar_visual">
+        <pose>0 0 0 0 1.570796 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>1.6</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.85 0.02 0.02 1</ambient>
+          <diffuse>0.95 0.04 0.04 1</diffuse>
+          <specular>0.25 0.10 0.10 1</specular>
+        </material>
+      </visual>
+
+      <collision name="red_bar_collision">
+        <pose>0 0 0 0 1.570796 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>1.6</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

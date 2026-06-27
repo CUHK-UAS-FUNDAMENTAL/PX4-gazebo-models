@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="imav2026_thermal_sources">
+    <static>true</static>
+
+    <link name="thermal_source_box_1">
+      <pose>0.70285 1.2095 0.06 0 0 0</pose>
+      <gravity>false</gravity>
+      <self_collide>false</self_collide>
+      <temperature_celsius>22</temperature_celsius>
+      <source_size>0.24 0.24 0.01</source_size>
+    </link>
+
+    <link name="thermal_source_box_2">
+      <pose>-0.21172 1.4994 0.06 0 0 0</pose>
+      <gravity>false</gravity>
+      <self_collide>false</self_collide>
+      <temperature_celsius>85</temperature_celsius>
+      <source_size>0.24 0.24 0.01</source_size>
+    </link>
+
+    <link name="thermal_source_box_3">
+      <pose>0.37253 2.0252 0.06 0 0 0</pose>
+      <gravity>false</gravity>
+      <self_collide>false</self_collide>
+      <temperature_celsius>22</temperature_celsius>
+      <source_size>0.24 0.24 0.01</source_size>
+    </link>
+  </model>
+</sdf>
