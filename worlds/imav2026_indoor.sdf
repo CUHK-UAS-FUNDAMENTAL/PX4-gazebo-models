@@ -129,6 +129,87 @@
       <pose>0 0 0 0 0 0</pose>
     </include>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Arena enclosure: 4 walls + invisible roof (5m high)          -->
+    <!-- Each wall extended 2.5m outward from original bounds          -->
+    <!-- Arena bounds: X≈[-6.1, 5.4], Y≈[-9.6, 8.2]                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- North wall: Y=+8.2 -->
+    <model name="arena_wall_north">
+      <static>true</static>
+      <pose>-0.35 8.2 2.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>11.5 0.15 5.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>11.5 0.15 5.0</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- South wall: Y=-9.6 -->
+    <model name="arena_wall_south">
+      <static>true</static>
+      <pose>-0.35 -9.6 2.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>11.5 0.15 5.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>11.5 0.15 5.0</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- East wall: X=+5.4 -->
+    <model name="arena_wall_east">
+      <static>true</static>
+      <pose>5.4 -0.7 2.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.15 17.8 5.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>0.15 17.8 5.0</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- West wall: X=-6.1 -->
+    <model name="arena_wall_west">
+      <static>true</static>
+      <pose>-6.1 -0.7 2.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.15 17.8 5.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>0.15 17.8 5.0</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Roof: Z=5.0, visually transparent but LiDAR-visible -->
+    <model name="arena_roof">
+      <static>true</static>
+      <pose>-0.35 -0.7 5.0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>11.5 17.8 0.1</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 0</ambient><diffuse>0.5 0.5 0.5 0</diffuse></material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>11.5 17.8 0.1</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
     <!-- Landing platform (moving, with motion plugin) -->
     <include>
       <uri>model://imav2026_landing_platform</uri>
